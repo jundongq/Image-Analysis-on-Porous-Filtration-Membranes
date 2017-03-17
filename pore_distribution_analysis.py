@@ -8,12 +8,13 @@ from operator import mul
 ### Image Analysis ###
 
 effective_Hight = 600
-scale = 1 # 1mm/pixel
+width_of_membrane = 21 #um
 num_bin = 20
 # Step 1 Read and Crop the image
 img = cv2.imread('test_pore.png')
 crop_img = img[:effective_Hight, :, :]
 height, width, channels = crop_img.shape
+scale = width_of_membrane / width
 
 # Step 2 Convert to Grayscale and Enhance Contrast of Image
 gray_img = cv2.cvtColor(crop_img, cv2.COLOR_RGB2GRAY )
@@ -76,7 +77,7 @@ def imclearborder(imgBW, radius):
     return imgBWcopy
     
 # Step 7 Clear the blobs with connection with borders
-clear_img_2 = imclearborder(opening, 5)
+clear_img_2 = imclearborder(clean_img, 5)
 # There are some erroneous pixels at the bottom line of the img, which are supposed to be 0 (black)
 clear_img_2[-1,:] = 0
 
